@@ -1,0 +1,9 @@
+#rc { position: fixed; bottom: 20px; right: 20px; z-index: 999999; display: flex; flex-direction: column; align-items: flex-end; }
+#rt { display: none; }
+#ri { display: none; width: 380px; height: 600px; border: none; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.15); margin-bottom: 15px; background: #fff; max-width: 90vw; max-height: 80vh; }
+#rb { background: #000; color: #fff; border-radius: 50%; width: 60px; height: 60px; font-size: 28px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,.2); display: flex; align-items: center; justify-content: center; transition: transform .2s ease; }
+#rb:hover { transform: scale(1.05); }
+#rt:checked ~ #ri { display: block; }
+#rt:checked ~ #rb .ci { display: none; }
+#rt:checked ~ #rb .cx { display: inline !important; }
+.cx { display: none; }
