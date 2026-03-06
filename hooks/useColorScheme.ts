@@ -8,7 +8,7 @@ export type ColorSchemePreference = ColorScheme | "system";
 const STORAGE_KEY = "chatkit-color-scheme";
 
 function getSystemSnapshot(): ColorScheme {
-  return "light"; // Forceer altijd de lichte modus
+  return "light"; 
 }
 
 function getServerSnapshot(): ColorScheme {
@@ -26,7 +26,7 @@ function readStoredPreference(): ColorSchemePreference | null {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (raw === "light" || raw === "dark") {
-      return "light"; // Negeer de opgeslagen donkere modus
+      return "light"; 
     }
     return raw === "system" ? "system" : null;
   } catch (error) {
@@ -45,7 +45,7 @@ function persistPreference(preference: ColorSchemePreference): void {
     if (preference === "system") {
       window.localStorage.removeItem(STORAGE_KEY);
     } else {
-      window.localStorage.setItem(STORAGE_KEY, "light"); // Forceer opslaan als light
+      window.localStorage.setItem(STORAGE_KEY, "light"); 
     }
   } catch (error) {
     if (process.env.NODE_ENV !== "production") {
