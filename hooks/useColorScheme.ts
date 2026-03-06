@@ -6,27 +6,9 @@ export type ColorScheme = "light" | "dark";
 export type ColorSchemePreference = ColorScheme | "system";
 
 const STORAGE_KEY = "chatkit-color-scheme";
-const PREFERS_DARK_QUERY = "(prefers-color-scheme: dark)";
-
-type MediaQueryCallback = (event: MediaQueryListEvent) => void;
-
-function getMediaQuery(): MediaQueryList | null {
-  if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
-    return null;
-  }
-  try {
-    return window.matchMedia(PREFERS_DARK_QUERY);
-  } catch (error) {
-    if (process.env.NODE_ENV !== "production") {
-      console.warn("[useColorScheme] matchMedia failed", error);
-    }
-    return null;
-  }
-}
 
 function getSystemSnapshot(): ColorScheme {
-  const media = getMediaQuery();
-  return media?.matches ? "dark" : "light";
+  return "light"; // Forceer altijd de lichte modus
 }
 
 function getServerSnapshot(): ColorScheme {
@@ -34,24 +16,6 @@ function getServerSnapshot(): ColorScheme {
 }
 
 function subscribeSystem(listener: () => void): () => void {
-  const media = getMediaQuery();
-  if (!media) {
-    return () => { };
-  }
-
-  const handler: MediaQueryCallback = () => listener();
-
-  if (typeof media.addEventListener === "function") {
-    media.addEventListener("change", handler);
-    return () => media.removeEventListener("change", handler);
-  }
-
-  // Fallback for older browsers or environments.
-  if (typeof media.addListener === "function") {
-    media.addListener(handler);
-    return () => media.removeListener(handler);
-  }
-
   return () => { };
 }
 
@@ -62,7 +26,7 @@ function readStoredPreference(): ColorSchemePreference | null {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (raw === "light" || raw === "dark") {
-      return raw;
+      return "light"; // Negeer de opgeslagen donkere modus
     }
     return raw === "system" ? "system" : null;
   } catch (error) {
@@ -81,7 +45,7 @@ function persistPreference(preference: ColorSchemePreference): void {
     if (preference === "system") {
       window.localStorage.removeItem(STORAGE_KEY);
     } else {
-      window.localStorage.setItem(STORAGE_KEY, preference);
+      window.localStorage.setItem(STORAGE_KEY, "light"); // Forceer opslaan als light
     }
   } catch (error) {
     if (process.env.NODE_ENV !== "production") {
@@ -95,9 +59,9 @@ function applyDocumentScheme(scheme: ColorScheme): void {
     return;
   }
   const root = document.documentElement;
-  root.dataset.colorScheme = scheme;
-  root.classList.toggle("dark", scheme === "dark");
-  root.style.colorScheme = scheme;
+  root.dataset.colorScheme = "light";
+  root.classList.remove("dark");
+  root.style.colorScheme = "light";
 }
 
 type UseColorSchemeResult = {
@@ -118,15 +82,12 @@ export function useColorScheme(
   const systemScheme = useSystemColorScheme();
 
   const [preference, setPreferenceState] = useState<ColorSchemePreference>(() => {
-    if (typeof window === "undefined") {
-      return initialPreference;
-    }
-    return readStoredPreference() ?? initialPreference;
+    return "light";
   });
 
   const scheme = useMemo<ColorScheme>(
-    () => (preference === "system" ? systemScheme : preference),
-    [preference, systemScheme]
+    () => "light",
+    []
   );
 
   useEffect(() => {
@@ -157,15 +118,15 @@ export function useColorScheme(
   }, []);
 
   const setPreference = useCallback((next: ColorSchemePreference) => {
-    setPreferenceState(next);
+    setPreferenceState("light");
   }, []);
 
   const setScheme = useCallback((next: ColorScheme) => {
-    setPreferenceState(next);
+    setPreferenceState("light");
   }, []);
 
   const resetPreference = useCallback(() => {
-    setPreferenceState("system");
+    setPreferenceState("light");
   }, []);
 
   return {

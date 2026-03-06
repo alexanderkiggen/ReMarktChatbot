@@ -257,15 +257,15 @@ export function ChatKitPanel({
   const chatkit = useChatKit({
     api: { getClientSecret },
     theme: {
-      colorScheme: theme,
+      colorScheme: "light",
       color: {
         grayscale: {
-          hue: 220,
+          hue: 0,
           tint: 6,
-          shade: theme === "dark" ? -1 : -4,
+          shade: -4,
         },
         accent: {
-          primary: theme === "dark" ? "#f1f5f9" : "#0f172a",
+          primary: "#E52636",
           level: 1,
         },
       },
@@ -324,8 +324,6 @@ export function ChatKitPanel({
       processedFacts.current.clear();
     },
     onError: ({ error }: { error: unknown }) => {
-      // Note that Chatkit UI handles errors for your users.
-      // Thus, your app code doesn't need to display errors on UI.
       console.error("ChatKit error", error);
     },
   });
@@ -344,7 +342,7 @@ export function ChatKitPanel({
   }
 
   return (
-    <div className="relative flex h-[90vh] w-full flex-col overflow-hidden bg-white shadow-sm transition-colors dark:bg-slate-900">
+    <div className="relative flex h-[90vh] w-full flex-col overflow-hidden bg-white shadow-sm transition-colors">
       <ChatKit
         key={widgetInstanceKey}
         control={chatkit.control}
