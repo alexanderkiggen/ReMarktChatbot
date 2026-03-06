@@ -6,12 +6,22 @@ export const CREATE_SESSION_ENDPOINT = "/api/create-session";
 
 export const STARTER_PROMPTS: StartScreenPrompt[] = [
   {
-    label: "What can you do?",
-    prompt: "What can you do?",
+    label: "Waar kan de ReDuck Bot mij mee helpen?",
+    prompt: "Waar kan de ReDuck Bot mij mee helpen?",
+    icon: "circle-question",
+  },
+  {
+    label: "Product retourneren",
+    prompt: "Ik wil graag een product retourneren",
+    icon: "circle-question",
+  },
+    {
+    label: "Informatie over mijn bestelling",
+    prompt: "Ik wil graag informatie over mijn bestelling",
     icon: "circle-question",
   },
 ];
 
-export const PLACEHOLDER_INPUT = "Ask anything...";
+export const PLACEHOLDER_INPUT = "Vraag iets...";
 
-export const GREETING = "How can I help you today?";
+export const GREETING = "Hoe kan ik je vandaag helpen?";
