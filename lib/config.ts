@@ -6,7 +6,7 @@ export const CREATE_SESSION_ENDPOINT = "/api/create-session";
 
 export const STARTER_PROMPTS: StartScreenPrompt[] = [
   {
-    label: "Waar kan de ReDuck Bot mij mee helpen?",
+    label: "Hoi ReMarkt",
     prompt: "Waar kan de ReDuck Bot mij mee helpen?",
     icon: "circle-question",
   },
