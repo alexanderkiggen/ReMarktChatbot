@@ -8,10 +8,18 @@ export default function App() {
   const { scheme, setScheme } = useColorScheme();
 
   const handleWidgetAction = useCallback(async (action: FactAction) => {
-    if (process.env.NODE_ENV !== "production") {
-      console.info("[ChatKitPanel] widget action", action);
-    }
-  }, []);
+  if (process.env.NODE_ENV !== "production") {
+    console.info("[ChatKitPanel] widget action", action);
+  }
+
+  if (action.type === "whatsapp.open") {
+    const phone = "31630595724";
+    const message =
+      (action.payload && (action.payload as any)["wa.message"]) || "";
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+  }
+}, []);
 
   const handleResponseEnd = useCallback(() => {
     if (process.env.NODE_ENV !== "production") {

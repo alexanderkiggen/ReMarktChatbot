@@ -6,8 +6,8 @@ export const CREATE_SESSION_ENDPOINT = "/api/create-session";
 
 export const STARTER_PROMPTS: StartScreenPrompt[] = [
   {
-    label: "Ties is dom",
-    prompt: "Domme ties",
+    label: "Ik heb een vraag over mijn bestelling",
+    prompt: "ik heb een vraag over mijn bestelling",
     icon: "circle-question",
   },
   {
