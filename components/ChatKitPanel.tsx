@@ -292,7 +292,7 @@ export function ChatKitPanel({
         }
         if (action?.type === "whatsapp.open") {
           const phone = "31630595724";
-          const message = String(action.payload?.["wa.message"] ?? "");
+          const message = String((action.payload as any)?.wa?.message ?? "");
           const url = `https://wa.me/${phone}?text=${encodeURIComponent(
             message
           )}`;
