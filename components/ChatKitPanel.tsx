@@ -281,6 +281,28 @@ export function ChatKitPanel({
     threadItemActions: {
       feedback: false,
     },
+
+    widgets: {
+      onAction: async (action: {
+        type?: string;
+        payload?: Record<string, unknown>;
+      }) => {
+        if (isDev) {
+          console.info("[ChatKitPanel] widget onAction", action);
+        }
+        if (action?.type === "whatsapp.open") {
+          const phone = "31630595724";
+          const message = String(action.payload?.["wa.message"] ?? "");
+          const url = `https://wa.me/${phone}?text=${encodeURIComponent(
+            message
+          )}`;
+          if (isBrowser) {
+            window.open(url, "_blank");
+          }
+        }
+      },
+    },
+
     onClientTool: async (invocation: {
       name: string;
       params: Record<string, unknown>;
