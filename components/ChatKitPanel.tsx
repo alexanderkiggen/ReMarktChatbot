@@ -71,6 +71,64 @@ export function ChatKitPanel({
     };
   }, []);
 
+   useEffect(() => {
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
+  // Vervangt de ingebouwde "Approve"/"Reject" labels van de ChatKit
+  // User-approval node door "Ja"/"Nee". ChatKit rendert deze knoppen
+  // in een (open) Shadow DOM, daarom kan globale CSS er niet bij en
+  // gebruiken we een MutationObserver die door shadow roots heen kijkt.
+  useEffect(() => {
+    if (!isBrowser) {
+      return;
+    }
+
+    const LABELS: Record<string, string> = {
+      Approve: "Ja",
+      Reject: "Nee",
+    };
+
+    const relabel = (root: Document | ShadowRoot | Element) => {
+      const buttons = (root as Element).querySelectorAll?.("button");
+      buttons?.forEach((btn) => {
+        const current = btn.textContent?.trim();
+        if (current && LABELS[current]) {
+          const span = btn.querySelector("span") ?? btn;
+          if (span.textContent?.trim() === current) {
+            span.textContent = LABELS[current];
+          }
+        }
+      });
+
+      const all = (root as Element).querySelectorAll?.("*");
+      all?.forEach((el) => {
+        const sr = (el as Element & { shadowRoot?: ShadowRoot | null })
+          .shadowRoot;
+        if (sr) {
+          relabel(sr);
+        }
+      });
+    };
+
+    relabel(document);
+
+    const observer = new MutationObserver(() => {
+      relabel(document);
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   useEffect(() => {
     if (!isBrowser) {
       return;
