@@ -32,18 +32,3 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
 }
-button[data-variant="solid"] span {
-  font-size: 0;
-}
-button[data-variant="solid"] span::after {
-  content: "Ja";
-  font-size: 1rem;
-}
-
-button[data-variant="outline"] span {
-  font-size: 0;
-}
-button[data-variant="outline"] span::after {
-  content: "Nee";
-  font-size: 1rem;
-}
