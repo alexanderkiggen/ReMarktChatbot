@@ -266,7 +266,7 @@ export function ChatKitPanel({
       },
         accent: {
           primary: "#E52636",
-          level: 2,
+          level: 3,
         },
       },
       radius: "round",
