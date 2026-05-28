@@ -260,21 +260,25 @@ export function ChatKitPanel({
       colorScheme: "light",
       color: {
         grayscale: {
-        hue: 0,
-        tint: 0,
-        shade: 0,
-      },
+          hue: 0,
+          tint: 6,
+          shade: -4,
+        },
         accent: {
           primary: "#E52636",
-          level: 2,
+          level: 1,
         },
       },
       radius: "round",
+    },
+    header: {
+      enabled: true,
     },
     startScreen: {
       greeting: GREETING,
       prompts: STARTER_PROMPTS,
     },
+    // ... de rest blijft hetzelfde
     composer: {
       placeholder: PLACEHOLDER_INPUT,
     },
