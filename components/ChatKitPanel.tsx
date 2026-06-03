@@ -291,7 +291,7 @@ export function ChatKitPanel({
           console.info("[ChatKitPanel] widget onAction", action);
         }
         if (action?.type === "whatsapp.open") {
-          const phone = "31630595724";
+          const phone = "31648674266";
          const message = String(
           (action.payload as { wa?: { message?: string } })?.wa?.message ?? ""
           );
